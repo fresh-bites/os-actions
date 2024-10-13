@@ -23,22 +23,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Validate Inputs
-      shell: bash
-      run: |
-        unset_vars=()
-        
-        for var in shock_id intensity duration api_key; do
-          if [ -z "${{ inputs.${var} }}" ]; then
-            unset_vars+=($var)
-          fi
-        done
-        
-        if [ ${#unset_vars[@]} -ne 0 ]; then
-          echo "The following inputs are unset: ${unset_vars[*]}"
-          exit 1
-        fi
-
     - name: Send Shock Command
       shell: bash
       run: |
@@ -47,6 +31,20 @@ runs:
         duration="${{ inputs.duration }}"
         api_key="${{ inputs.api_key }}"
         shock_type="${{ inputs.shock_type }}"
+
+        unset_vars=()
+
+        # Check for unset required inputs
+        for var in shock_id intensity duration api_key shock_type; do
+          if [ -z "${!var}" ]; then
+            unset_vars+=("$var")
+          fi
+        done
+        
+        if [ ${#unset_vars[@]} -ne 0 ]; then
+          echo "The following inputs are unset: ${unset_vars[*]}"
+          exit 1
+        fi
 
         echo "Preparing to send $shock_type with intensity: $intensity and duration: $duration milliseconds"
 
