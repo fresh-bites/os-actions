@@ -49,20 +49,20 @@ runs:
 
         url='https://api.openshock.app/2/shockers/control'
 
-        # payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
-        # '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
-        payload='{
-          "shocks": [
-            {
-              "id": "'"$shock_id"'",
-              "type": "'"$shock_type"'",
-              "intensity": '"$intensity"',
-              "duration": '"$duration"',
-              "exclusive": true
-            }
-          ],
-          "customName": "os-actions"
-        }'
+        payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
+        '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
+        # payload='{
+        #   "shocks": [
+        #     {
+        #       "id": "'"$shock_id"'",
+        #       "type": "'"$shock_type"'",
+        #       "intensity": '"$intensity"',
+        #       "duration": '"$duration"',
+        #       "exclusive": true
+        #     }
+        #   ],
+        #   "customName": "os-actions"
+        # }'
 
         response=$(curl --trace - -v -s -w "%{http_code}" -X POST "$url" \
             -H "Accept: application/json" \
