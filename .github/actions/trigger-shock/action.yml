@@ -33,16 +33,15 @@ runs:
         shock_type="${{ inputs.shock_type }}"
 
         unset_vars=()
-
-        # Check for unset required inputs
+    
         for var in shock_id intensity duration api_key shock_type; do
-          if [ -z "${!var}" ]; then
+          if [ -z "${!var+x}" ] || [ -z "${!var}" ]; then
             unset_vars+=("$var")
           fi
         done
         
         if [ ${#unset_vars[@]} -ne 0 ]; then
-          echo "The following inputs are unset: ${unset_vars[*]}"
+          echo "The following inputs are unset or empty: ${unset_vars[*]}"
           exit 1
         fi
 
