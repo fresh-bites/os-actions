@@ -12,24 +12,26 @@ inputs:
   duration:
     description: 'Duration of the shock in milliseconds'
     required: true
+  api_key:
+    description: 'API key for authentication'
+    required: true
 
 runs:
   using: 'composite'
   steps:
     - name: Send Shock Command
       shell: bash
-      env: 
-        API_KEY: ${{ secrets.API_KEY }}
       run: |
         shock_id="${{ inputs.shock_id }}"
         intensity="${{ inputs.intensity }}"
         duration="${{ inputs.duration }}"
+        api_key="${{ inputs.api_key }}"
         shock_type="Shock"
 
         echo "Preparing to send $shock_type with intensity: $intensity and duration: $duration milliseconds"
 
         url='https://api.shocklink.net/2/shockers/control'
-        headers="accept: application/json; OpenShockToken: $API_KEY; Content-Type: application/json"
+        headers="accept: application/json; OpenShockToken: $api_key; Content-Type: application/json"
 
         payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
         '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
