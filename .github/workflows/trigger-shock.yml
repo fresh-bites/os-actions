@@ -22,6 +22,8 @@ jobs:
   trigger-shock:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Trigger Shock
         uses: ./.github/actions/trigger-shock
         with:
