@@ -53,12 +53,16 @@ runs:
         payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
         '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
 
-        response=$(curl -s -w "%{http_code}" -o /dev/stderr -X POST "$url" -H "$headers" -d "$payload")
+        response=$(curl -s -w "%{http_code}" -X POST "$url" -H "$headers" -d "$payload")
         
-        if [ "$response" -eq 200 ]; then
+        # Extract the body from the response (last 3 characters are the status code)
+        body="${response:0:${#response}-3}"
+        status_code="${response: -3}"
+        
+        if [ "$status_code" -eq 200 ]; then
           echo "$shock_type sent successfully."
         else
-          echo "Failed to send $shock_type. Response code: $response"
-          echo "Response body: $(tail -n 1 /dev/stderr)"
+          echo "Failed to send $shock_type. Response code: $status_code"
+          echo "Response body: $body"
           exit 1
         fi
