@@ -29,7 +29,7 @@ runs:
         unset_vars=()
         
         for var in shock_id intensity duration api_key; do
-          if [ -z "${{ inputs[$var] }}" ]; then
+          if [ -z "${{ inputs.${var} }}" ]; then
             unset_vars+=($var)
           fi
         done
