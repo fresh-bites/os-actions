@@ -1,0 +1,42 @@
+name: Trigger Shock
+
+description: Sends a shock or vibrate command to the OpenShock API.
+
+inputs:
+  shock_id:
+    description: 'The ID of the shock to trigger'
+    required: true
+  intensity:
+    description: 'Intensity of the shock'
+    required: true
+  duration:
+    description: 'Duration of the shock in milliseconds'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Send Shock Command
+      run: |
+        api_key="${{ secrets.API_KEY }}"
+        shock_id="${{ inputs.shock_id }}"
+        intensity="${{ inputs.intensity }}"
+        duration="${{ inputs.duration }}"
+        shock_type="Shock"
+
+        echo "Preparing to send $shock_type with intensity: $intensity and duration: $duration milliseconds"
+
+        url='https://api.shocklink.net/2/shockers/control'
+        headers="accept: application/json; OpenShockToken: $api_key; Content-Type: application/json"
+
+        payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
+        '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
+
+        response=$(curl -s -w "%{http_code}" -o /dev/null -X POST "$url" -H "$headers" -d "$payload")
+
+        if [ "$response" -eq 200 ]; then
+          echo "$shock_type sent successfully."
+        else
+          echo "Failed to send $shock_type. Response code: $response"
+          exit 1
+        fi
