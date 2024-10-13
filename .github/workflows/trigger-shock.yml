@@ -9,13 +9,12 @@ on:
         default: 'default_shock_id'  # Replace with a default value for manual runs if wanted
       intensity:
         description: 'Intensity of the shock'
-        required: false
+        required: true
         default: '50'
       duration:
         description: 'Duration of the shock in milliseconds'
-        required: false
+        required: true
         default: '1000'
-
   schedule:
     - cron: '59 23 31 2 *' # Change this to your desired schedule
 
@@ -26,6 +25,6 @@ jobs:
       - name: Trigger Shock
         uses: ./.github/actions/trigger-shock
         with:
-          shock_id: ${{ github.event.inputs.shock_id || 'default_shock_id' }}
-          intensity: ${{ github.event.inputs.intensity || '50' }}
-          duration: ${{ github.event.inputs.duration || '1000' }}
+          shock_id: ${{ github.event.inputs.shock_id || env.SHOCK_ID }}
+          intensity: ${{ github.event.inputs.intensity || env.INTENSITY }}
+          duration: ${{ github.event.inputs.duration || env.DURATION }}
