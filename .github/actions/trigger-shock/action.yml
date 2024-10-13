@@ -17,6 +17,7 @@ runs:
   using: 'composite'
   steps:
     - name: Send Shock Command
+      shell: bash
       run: |
         api_key="${{ secrets.API_KEY }}"
         shock_id="${{ inputs.shock_id }}"
