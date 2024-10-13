@@ -64,7 +64,7 @@ runs:
           "customName": "os-actions"
         }'
 
-        response=$(curl -v -s -w "%{http_code}" -X POST "$url" \
+        response=$(curl --trace - -v -s -w "%{http_code}" -X POST "$url" \
             -H "Accept: application/json" \
             -H "OpenShockToken: $api_key" \
             -H "Content-Type: application/json" \
