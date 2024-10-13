@@ -13,7 +13,8 @@ Before using this action, ensure that you have the following:
 
 Make a private fork of this repository using the **Fork** button in the upper right corner.
 
-## Adding Your API Key
+## Adding Your API Key (and Scheduled Settings)
+
 To securely store your OpenShock API key:
 
 1. Go to your GitHub repository.
@@ -21,6 +22,14 @@ To securely store your OpenShock API key:
 1. Navigate to **Secrets and variables** > **Actions**.
 1. Click on **New repository secret**.
 1. Add a secret with the name `API_KEY` and your actual OpenShock API key as the value.
+
+If you are going to run the workflow on a schedule, also add these secrets:
+
+   - `SHOCK_ID`: The default shock ID you want to trigger.
+   - `INTENSITY`: The default intensity of the shock (e.g., 50).
+   - `DURATION`: The default duration of the shock in milliseconds (e.g., 1000).
+
+They are unused when running the workflow manually.
 
 ## Running the Workflow Manually
 
@@ -53,4 +62,10 @@ Here are a few example cron expressions you can use:
 - **Every Monday at 9 AM**: `0 9 * * 1`
 - **Every weekday at 5:30 AM**: `30 5 * * 1-5`
 
-Make sure to update the cron expression to match your scheduling needs.
+Update the cron expression to match your scheduling needs.
+
+Notes:
+
+- The cron is the time your request will be queued so the shock may come a few seconds or minutes later.
+- See the [GitHub Actions caveats](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule) on scheduling.
+- Time zone is UTC so you will need to adjust the times with daylight savings time switches. You can also implement [this hacky workaround](https://github.com/orgs/community/discussions/13454#discussioncomment-4091593).
