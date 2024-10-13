@@ -65,7 +65,7 @@ runs:
           "customName": "os-actions"
         }'
 
-        response=$(curl -s -w "%{http_code}" -X POST "$url" -H "$headers" -d "$payload")
+        response=$(curl -v -s -w "%{http_code}" -X POST "$url" -H "$headers" -d "$payload")
         
         # Extract the body from the response (last 3 characters are the status code)
         body="${response:0:${#response}-3}"
