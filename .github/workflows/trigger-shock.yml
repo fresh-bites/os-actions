@@ -30,3 +30,4 @@ jobs:
           shock_id: ${{ github.event.inputs.shock_id || env.SHOCK_ID }}
           intensity: ${{ github.event.inputs.intensity || env.INTENSITY }}
           duration: ${{ github.event.inputs.duration || env.DURATION }}
+          api_key: ${{ secrets.API_KEY }}
