@@ -1,4 +1,4 @@
-name: Trigger Shock Workflow
+name: ⚡️ Trigger Shock Workflow
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
       - name: Trigger Shock
         uses: ./.github/actions/trigger-shock
         with:
-          shock_id: ${{ github.event.inputs.shock_id || secrets.SHOCK_ID }}
-          intensity: ${{ github.event.inputs.intensity || secrets.INTENSITY }}
-          duration: ${{ github.event.inputs.duration || secrets.DURATION }}
+          shock_id: ${{ github.event.inputs.shock_id || env.SHOCK_ID }}
+          intensity: ${{ github.event.inputs.intensity || env.INTENSITY }}
+          duration: ${{ github.event.inputs.duration || env.DURATION }}
           api_key: ${{ secrets.API_KEY }}
