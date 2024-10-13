@@ -9,16 +9,9 @@ Before using this action, ensure that you have the following:
 - A GitHub account
 - Access to the OpenShock API and an API key
 
-## Cloning the Repository
+## Fork the Repository
 
-1. Clone this repository to your local machine. Make sure to keep it private:
-
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
-   ```
-   
-1. Set the repository to private if it isn't already. You can do this in the repository settings on GitHub.
+Make a private fork of this repository using the **Fork** button in the upper right corner.
 
 ## Adding Your API Key
 To securely store your OpenShock API key:
