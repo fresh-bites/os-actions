@@ -1,0 +1,31 @@
+name: Trigger Shock Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      shock_id:
+        description: 'Shock ID to trigger'
+        required: true
+        default: 'default_shock_id'  # Replace with a default value for manual runs if wanted
+      intensity:
+        description: 'Intensity of the shock'
+        required: false
+        default: '50'
+      duration:
+        description: 'Duration of the shock in milliseconds'
+        required: false
+        default: '1000'
+
+  schedule:
+    - cron: '59 23 31 2 *' # Change this to your desired schedule
+
+jobs:
+  trigger-shock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Shock
+        uses: ./.github/actions/trigger-shock
+        with:
+          shock_id: ${{ github.event.inputs.shock_id || 'default_shock_id' }}
+          intensity: ${{ github.event.inputs.intensity || '50' }}
+          duration: ${{ github.event.inputs.duration || '1000' }}
