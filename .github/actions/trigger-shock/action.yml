@@ -47,7 +47,7 @@ runs:
 
         echo "Preparing to send $shock_type with intensity: $intensity and duration: $duration milliseconds"
 
-        url='https://api.shocklink.net/2/shockers/control'
+        url='https://api.openshock.app/2/shockers/control'
         headers="accept: application/json; OpenShockToken: $api_key; Content-Type: application/json"
 
         # payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
