@@ -3,10 +3,10 @@ name: ⚡️ Trigger Shock Workflow
 on:
   workflow_dispatch:
     inputs:
-      shock_id:
-        description: 'Shock ID to trigger'
+      shocker_id:
+        description: 'Shocker ID to trigger'
         required: true
-        default: 'default_shock_id'  # Replace with a default value for manual runs if wanted
+        default: '3fa85f64-5717-4562-b3fc-2c963f66afa6'  # Replace with a default value for manual runs if wanted
       intensity:
         description: 'Intensity of the shock'
         required: true
@@ -27,7 +27,7 @@ jobs:
       - name: Trigger Shock
         uses: ./.github/actions/trigger-shock
         with:
-          shock_id: ${{ github.event.inputs.shock_id || vars.SHOCK_ID }}
+          shocker_id: ${{ github.event.inputs.shocker_id || vars.SHOCKER_ID }}
           intensity: ${{ github.event.inputs.intensity || vars.INTENSITY }}
           duration: ${{ github.event.inputs.duration || vars.DURATION }}
           api_key: ${{ secrets.API_KEY }}
