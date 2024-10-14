@@ -34,7 +34,7 @@ This API key is used by both the manually triggered and scheduled workflows.
 1. On the **Actions secrets and variables** page, click the **Variables** tab at the top.
 1. Click on **New repository variable**.
 1. Add these variables
-   - `SHOCK_ID`: The default shock ID you want to trigger. This should look something like `3fa85f64-5717-4562-b3fc-2c963f66afa6`.
+   - `SHOCKER_ID`: The default shocker ID you want to trigger. This should look something like `3fa85f64-5717-4562-b3fc-2c963f66afa6`.
    - `INTENSITY`: The default intensity of the shock (e.g., 50).
    - `DURATION`: The default duration of the shock in milliseconds (e.g., 1000).
 
@@ -48,7 +48,7 @@ To run the workflow manually:
 1. Select the **Trigger Shock Workflow** from the list of workflows.
 1. Click on the **Run workflow** button.
 1. Fill in the required inputs:
-     - **Shock ID**: The ID of the shock you want to trigger.
+     - **Shocker ID**: The ID of the shocker you want to trigger.
      - **Intensity**: The intensity of the shock (default is 50).
      - **Duration**: The duration of the shock in milliseconds (default is 1000).
 1. Click **Run workflow** to trigger the action.
