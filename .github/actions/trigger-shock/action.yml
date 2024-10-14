@@ -3,8 +3,8 @@ name: Trigger Shock
 description: Sends a shock or vibrate command to the OpenShock API.
 
 inputs:
-  shock_id:
-    description: 'The ID of the shock to trigger'
+  shocker_id:
+    description: 'The ID of the shocker to trigger'
     required: true
   intensity:
     description: 'Intensity of the shock'
@@ -26,7 +26,7 @@ runs:
     - name: Send Shock Command
       shell: bash
       run: |
-        shock_id="${{ inputs.shock_id }}"
+        shocker_id="${{ inputs.shocker_id }}"
         intensity="${{ inputs.intensity }}"
         duration="${{ inputs.duration }}"
         api_key="${{ inputs.api_key }}"
@@ -34,7 +34,7 @@ runs:
 
         unset_vars=()
     
-        for var in shock_id intensity duration api_key shock_type; do
+        for var in shocker_id intensity duration api_key shock_type; do
           if [ -z "${!var+x}" ] || [ -z "${!var}" ]; then
             unset_vars+=("$var")
           fi
@@ -49,20 +49,8 @@ runs:
 
         url='https://api.openshock.app/2/shockers/control'
 
-        payload=$(jq -n --arg id "$shock_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
+        payload=$(jq -n --arg id "$shocker_id" --arg type "$shock_type" --argjson intensity "$intensity" --argjson duration "$duration" \
         '{shocks: [{id: $id, type: $type, intensity: $intensity, duration: $duration, exclusive: true}], customName: "os-actions"}')
-        # payload='{
-        #   "shocks": [
-        #     {
-        #       "id": "'"$shock_id"'",
-        #       "type": "'"$shock_type"'",
-        #       "intensity": '"$intensity"',
-        #       "duration": '"$duration"',
-        #       "exclusive": true
-        #     }
-        #   ],
-        #   "customName": "os-actions"
-        # }'
 
         response=$(curl --trace - -s -w "%{http_code}" -X POST "$url" \
             -H "Accept: application/json" \
